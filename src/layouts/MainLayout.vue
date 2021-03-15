@@ -99,7 +99,7 @@
       </q-drawer>
 
       <q-page-container>
-        <q-page padding class="q-mt-xl window-width row justify-center ">
+        <!--q-page padding class="q-mt-xl window-width row justify-center ">
           <q-page >
               <div class="text-h2 text-weight-thin " style="opacity:.9">
                 Saldo:  ${{saldo}}
@@ -123,12 +123,16 @@
               />
             </div>
           </template>
-        </q-page>
+        </q-page-->
+        <keep-alive>
+
+      <router-view />
+        </keep-alive>
         
-        <q-page-sticky position="bottom-right" :offset="[18, 18]">
-            <q-btn fab icon="add" color="primary"  />
+        
+          <q-page-sticky position="bottom-right" :offset="[18, 18]">
+            <q-btn @click="enviar_iniciar_nuevo_movimiento" fab icon="add" color="primary" />
           </q-page-sticky>
-        
           
       </q-page-container>
       
@@ -191,36 +195,7 @@ export default {
   components: { EssentialLink },
   data () {
     return {
-      data: [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          sodium: 87,
-          calcium: '14%',
-          iron: '1%'
-        }],
-      columns: [
-        {
-          name: 'name',
-          required: true,
-          label: 'Dessert (100g serving)',
-          align: 'left',
-          field: row => row.name,
-          format: val => `${val}`,
-          sortable: true
-        },
-        {
-          name: 'calories',
-          align: 'center',
-          label: 'Calories',
-          field: 'calories',
-          sortable: true
-        },
-        { name: 'fat', label: 'Fat (g)', field: 'fat', sortable: true }
-      ],
+      
       saldo: 777.7,
       nombre_user: "Matias Rios",
       drawer: false
@@ -228,6 +203,15 @@ export default {
   },
   created()
   {
+  },
+  methods:
+  {
+    
+    enviar_iniciar_nuevo_movimiento()
+    {
+      console.log("envio movimiento");
+      this.$root.$emit('iniciar_nuevo_movimiento');
+    }
   }
 }
 
