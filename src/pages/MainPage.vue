@@ -15,17 +15,116 @@
           :data="my_data"
           :columns="my_columns"
           row-key="name"
-          :filter="filter"
           hide-header
         >
-          <template v-slot:top-right>
-            <q-input borderless dense debounce="300" v-model="filter" placeholder="Buscar">
-              <template v-slot:append>
-                <q-icon name="search" />
-              </template>
-            </q-input>
+          <template v-slot:body-cell-id="props">
+            <q-td :props="props">
+              <div>
+                <q-btn
+                  round
+                  icon="edit"
+                  size="xs"
+                  color="primary"
+                  @click="edit(props)"
+                ></q-btn>
+              </div>  
+            </q-td>
+          </template>
+          <template v-slot:item="props">
+            <div
+              class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
+              :style="props.selected ? 'transform: scale(0.95);' : ''"
+            >
+              <q-card>
+                <q-list dense>
+                  <q-item v-for="col in props.cols.filter(col => col.name !== 'id')" :key="col.name">
+                    <q-item-section>
+                      <q-item-label>{{ col.value }}</q-item-label>
+                    </q-item-section>
+                    <q-item-section side>
+                      <div>
+                        <q-btn
+                          round
+                          icon="add"
+                          size="xs"
+                          color="primary"
+                          @click="edit(props)"
+                        ></q-btn>
+                      </div>  
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-card>
+            </div>
           </template>
         </q-table>
+
+            <q-table
+              grid
+              title="Users"
+              :data="my_data"
+              :columns="my_columns"
+              row-key="name"
+            >
+              <template v-slot:item="props">
+                <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition">
+                  <q-card>
+                    <q-list dense>
+                      <q-item v-for="col in props.cols" :key="col.name">
+                        <div class="q-table__grid-item-row">
+                          <div class="q-table__grid-item-title">{{ col.label }}</div>
+                          <div class="q-table__grid-item-value">{{ col.value }}</div>
+                        </div>
+                      </q-item>
+                    </q-list>
+                  </q-card>
+                </div>
+              </template>
+            </q-table>
+
+          <q-table
+          title="Simple"
+          :data="my_data"
+          :columns="my_columns"
+          row-key="name"
+          dense
+        >
+          <template v-slot:body-cell-actions="props">
+            <q-td :props="props">
+              <q-btn dense round flat color="grey" @click="edit(props)" icon="edit"></q-btn>
+            </q-td>          
+          </template>
+        </q-table>
+
+        <q-table
+      title="Treats"
+      :data="my_data"
+      :columns="my_columns"
+      row-key="name"
+      selection="multiple"
+      :selected.sync="selected"
+    >
+       <template v-slot:top-right>
+        <q-btn
+          color="primary"
+          icon-right="delete_forever"
+          no-caps
+          @click="edit"
+        />
+      </template>
+       <template v-slot:body-cell-action="props">
+        <q-td :props="props">
+          <q-btn
+          color="negative"
+          icon-right="delete"
+          no-caps
+          flat
+          dense
+          @click="edit(props)"
+        />
+        </q-td>
+      </template>
+    </q-table>
       </div>
     </div>
     
@@ -125,6 +224,8 @@ export default {
   data()
   {
     return{
+      selected: [],
+      props: null,
       data_get: null,
       options_fetch: [],
       api_call: null,
@@ -155,8 +256,9 @@ export default {
             },
             { name: 'calories', align: 'center', label: 'Monto total', field: 'monto', sortable: true },
             { name: 'fat', label: 'Descripción', field: 'descripcion', sortable: true },
-            { name: 'fat', label: 'Categoría', field: 'categoria', sortable: true },
-            { name: 'carbs', label: 'Fecha de creación', field: 'fecha_creacion' }
+            { name: 'fat2', label: 'Categoría', field: 'categoria', sortable: true },
+            { name: 'carbs', label: 'Fecha de creación', field: 'fecha_creacion' },
+            { name: 'actions', label: 'Actions', field: '', align:'center' }
           ],
       my_data: [
         {
@@ -234,6 +336,10 @@ export default {
     
   },
   methods: {
+    edit(props)
+    {
+      console.log(props);
+    },
     async insert(apicall)
     {
 
