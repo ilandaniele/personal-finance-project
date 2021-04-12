@@ -1,8 +1,5 @@
 <template>
   <q-page padding class="flex flex-center">
-
-
-    
     <div class="column window-width row justify-center fit">
       <div class="q-mb-xl q-mt-xl text-h2 text-weight-thin col-1 text-center " >
             Saldo:  ${{saldo}}
@@ -211,16 +208,10 @@
 
     
   </q-page>
-  
-
-  
-
-  
 </template>
 
 <script>
-export default {  
-  
+export default { 
   data()
   {
     return{
@@ -232,7 +223,7 @@ export default {
       url_base: "https://geome7ric.matiasjrb.com.ar/php/v1/Api.php?apicall=",
       cantidad_de_cuotas: [3,6,9,12,15,18],
       accept:false,
-      fecha_movimiento: this.today(),
+      fecha_movimiento: this.hoy(),
       mostrar_nuevo_movimiento: false,
       nombre_movimiento: null,
       categorias_movimiento: [],
@@ -326,21 +317,22 @@ export default {
   },  
   created()
   {
-    this.showLoading("Un segundo..");
+    this.mostrar_cargando("Un segundo..");
     this.categorias_movimiento= ["Categoria prueba"];
-    this.get_movimientos();
+    this.obtener_movimientos();
     //alert("wtf");
     this.$root.$on('iniciar_nuevo_movimiento', () => this.iniciar_nuevo_movimiento());
     this.hideLoading();    
     this.popup_message("Bienvenido","green","home","white");
     
+      console.log(this.hoy());
   },
   methods: {
     edit(props)
     {
       console.log(props);
     },
-    async insert(apicall)
+    async insertar(apicall)
     {
 
       var res= await fetch(this.url_base+apicall,this.options_fetch).then(function (response) {
@@ -372,34 +364,33 @@ export default {
           console.log(data);
           this.my_data=data[arreglo];
           console.log(this.my_data[arreglo]);
-           console.log(this.my_data);
+          console.log(this.my_data);
           return data;
         });
     },
-    async get_movimientos()
+    async obtener_movimientos()
     {
       var data_res=await  this.get("getmov","movimientos");
-      //this.my_data=this.data_get;
+      //this.my_data=this.data_res;
       console.log(this.my_data);
-    },
-    
-    showLoading (msg) {
+    },    
+    ocultar_cargando (msg) {
       this.$q.loading.show({
         message: msg
       })      
     },
-    hideLoading()
+    mostrar_cargando()
     {
       this.$q.loading.hide();
     },
-    today()
+    hoy()
     {
-      var today = new Date();
-      var dd = String(today.getDate()).padStart(2, '0');
-      var MM = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-      var yyyy = today.getFullYear();      
-      today = yyyy + '-' + MM + '-' + dd;
-      return today;
+      var hoy = new Date();
+      var dd = String(hoy.getDate()).padStart(2, '0');
+      var MM = String(hoy.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = hoy.getFullYear();      
+      hoy = yyyy + '-' + MM + '-' + dd;
+      return hoy;
     },
     verificar_datos_nuevo_movimiento()
     {
@@ -410,7 +401,7 @@ export default {
       if (this.verificar_datos_nuevo_movimiento())
       {
         //modifico las options
-        this.showLoading("Agregando..");
+        this.mostrar_cargando("Agregando..");
         var fd = new FormData();
         fd.append('nombre', this.nombre_movimiento); 
         fd.append('descripcion', this.descripcion_movimiento); 
@@ -453,7 +444,7 @@ export default {
           method: 'POST',
           body: fd
         };
-        var res=await this.insert(/*apical */"insertmov");  
+        var res=await this.insertar(/*apical */"insertarmov");  
         this.popup_message("Movimiento agregado correctamente","green","done","white");
         this.reset_movimiento();
         this.hideLoading();     
@@ -465,7 +456,7 @@ export default {
     {
       /*
       accept:false,
-      fecha_movimiento: this.today()*/
+      fecha_movimiento: this.hoy()*/
       this.mostrar_nuevo_movimiento=false;/*
       nombre_movimiento: null,
       categorias_movimiento: [],
@@ -490,8 +481,7 @@ export default {
     {
       this.mostrar_nuevo_movimiento=true;
     }
-  }
-  
-    
+  }  
 }
 </script>
+
