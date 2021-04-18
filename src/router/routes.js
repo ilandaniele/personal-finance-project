@@ -2,11 +2,8 @@
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () => import('layouts/Login.vue'),
     children: [
-      { path: '', component: () => import('pages/MainPage.vue') },
-      { path: '/main', component: () => import('pages/MainPage.vue') }//,
-      //{ path: '/config',name: 'config', component: () => import('pages/Config.vue') },
     ]
   },
 
@@ -14,8 +11,33 @@ const routes = [
   // but you can also remove it
   {
     path: '*',
-    
     component: () => import('pages/Error404.vue')
+  },
+  {
+    path: '/main',
+    name: 'main',
+    meta: {requiresAuth: true},
+    component: () => import('layouts/MainLayout.vue'),
+    children: [      
+      { path: '/main', component: () => import('pages/MainPage.vue') }//,
+      //{ path: '/register', component: () => import('layouts/Register.vue') }
+    ]
+  },
+  {
+    path: '/register',
+    name: 'register',
+    meta: {requiresAuth: true},
+    component: () => import('layouts/Register.vue'),
+    children: [  
+    ]
+  },
+  {
+    path: '/relogin',
+    name: 'relogin',
+    meta: {requiresAuth: true},
+    component: () => import('layouts/Relogin.vue'),
+    children: [  
+    ]
   }
 ]
 

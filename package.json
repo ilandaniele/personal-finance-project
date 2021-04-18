@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "cloudinary-vue": "^1.1.2",
     "core-js": "^3.6.5",
+    "firebase": "^8.4.1",
+    "i": "^0.3.6",
     "quasar": "^1.0.0"
   },
   "devDependencies": {

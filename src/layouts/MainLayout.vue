@@ -75,13 +75,14 @@
               </q-item-section>
             </q-item>
             <q-separator />
-            <q-item clickable v-ripple>
+            <q-item 
+            @click="cerrar_sesion" clickable v-ripple>
               <q-item-section avatar>
                 <q-icon name="logout" />
               </q-item-section>
 
               <q-item-section>
-                Salir
+                Cerrar sesión
               </q-item-section>
             </q-item>
           </q-list>
@@ -145,6 +146,7 @@
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
 
+import firebase from 'firebase/app';
 const linksData = [
   {
     title: 'Docs',
@@ -206,7 +208,23 @@ export default {
   },
   methods:
   {
-    
+    async cerrar_sesion()
+    { 
+
+      /*
+      tengo que agregar un esta seguro?
+      */
+      try
+      {
+          const data= await firebase.auth().signOut();
+          alert("sesion cerrada joya");
+          this.$router.push({ path: '/' });
+      }     
+      catch (err)
+      {
+        alert("error cerrando sesion");
+      }
+    },
     enviar_iniciar_nuevo_movimiento()
     {
       console.log("envio movimiento");

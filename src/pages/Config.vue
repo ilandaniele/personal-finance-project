@@ -322,7 +322,7 @@ export default {
     this.obtener_movimientos();
     //alert("wtf");
     this.$root.$on('iniciar_nuevo_movimiento', () => this.iniciar_nuevo_movimiento());
-    this.ocultar_cargando();    
+    this.hideLoading();    
     this.popup_message("Bienvenido","green","home","white");
     
       console.log(this.hoy());
@@ -374,12 +374,12 @@ export default {
       //this.my_data=this.data_res;
       console.log(this.my_data);
     },    
-    mostrar_cargando (msg) {
+    ocultar_cargando (msg) {
       this.$q.loading.show({
         message: msg
       })      
     },
-    ocultar_cargando()
+    mostrar_cargando()
     {
       this.$q.loading.hide();
     },
@@ -447,7 +447,7 @@ export default {
         var res=await this.insertar(/*apical */"insertarmov");  
         this.popup_message("Movimiento agregado correctamente","green","done","white");
         this.reset_movimiento();
-        this.ocultar_cargando();     
+        this.hideLoading();     
         
       }
 
