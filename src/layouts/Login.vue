@@ -75,16 +75,19 @@
 
 <script>
 import MainLayout from 'layouts/MainLayout.vue';
-
+import ModuloFunciones from 'components/ModuloFunciones.vue'
 import { mapActions, mapState } from "vuex";
 import firebase from 'firebase/app';
+import Vue from 'vue'; // es6 syntax
 
 export default {
   
+  components: { ModuloFunciones }, 
    
   data () {    
     return {
       //url_base: "http://192.168.0.16/php/v1/Api.php?apicall=",
+      funciones: null,
       url_base: "https://matiasjrb.com.ar/php_bullmetal/v1/Api.php?apicall=",
       is_admin: false,
       formData: {email: 'matiasjriosb@gmail.com', password: 'Matiasjrb95!'},
@@ -100,7 +103,14 @@ export default {
   created()
   {
     
-    console.log("estoy en login");
+    console.log("estoy en login. tenes un ejemplo de como usar el modulo funciones.");
+    ModuloFunciones.methods.created;
+    ModuloFunciones.methods.alerta_positiva;
+    this.funciones= new Vue(ModuloFunciones);
+    this.funciones.$emit('alerta_positiva', "chau");
+    this.funciones.$emit('alerta_negativa', "atencion");
+    this.funciones.$emit('alerta_negativa_error', "fallo");
+    
   }  ,
     methods: {  
       intentar_iniciar_sesion_google()

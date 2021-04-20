@@ -30,13 +30,21 @@ const routes = [
     component: () => import('layouts/Register.vue'),
     children: [  
     ]
-  },
+  },/*
+  {
+    path: '/paginasolita',
+    name: 'paginasolita',
+    meta: {requiresAuth: true},
+    component: () => import('layouts/Paginasolita.vue'),
+    children: [  
+    ]
+  },*/
   {
     path: '/relogin',
     name: 'relogin',
     meta: {requiresAuth: true},
     component: () => import('layouts/Relogin.vue'),
-    children: [  
+    children: [
     ]
   }
 ]
