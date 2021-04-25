@@ -2,209 +2,93 @@
   <q-page padding class="flex flex-center">
     <div class="column window-width row justify-center fit">
       <div class="q-mb-xl q-mt-xl text-h2 text-weight-thin col-1 text-center " >
-            Saldo:  ${{saldo}}
+            Configuración
+      </div>
+      <div class="q-pa-md q-gutter-sm text-center">
+        <q-btn color="white" text-color="black" label="Standard" />
+        <q-btn color="primary" label="Primary" />
+        <q-btn color="secondary" label="Secondary" />
+        <q-btn color="amber" glossy label="Amber" />
+        <q-btn color="brown-5" label="Brown 5" />
+        <q-btn color="deep-orange" glossy label="Deep Orange" />
+        <q-btn color="purple" label="Purple" />
+        <q-btn color="black" label="Black" />
       </div>
 
-      <div class="q-pa-md col-2 full-width">
-        <q-table
-          grid
-          title="Últimos movimientos"
-          :data="my_data"
-          :columns="my_columns"
-          row-key="name"
-          hide-header
-        >
-          <template v-slot:body-cell-id="props">
-            <q-td :props="props">
-              <div>
-                <q-btn
-                  round
-                  icon="edit"
-                  size="xs"
-                  color="primary"
-                  @click="edit(props)"
-                ></q-btn>
-              </div>  
-            </q-td>
-          </template>
-          <template v-slot:item="props">
-            <div
-              class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
-              :style="props.selected ? 'transform: scale(0.95);' : ''"
-            >
-              <q-card>
-                <q-list dense>
-                  <q-item v-for="col in props.cols.filter(col => col.name !== 'id')" :key="col.name">
-                    <q-item-section>
-                      <q-item-label>{{ col.value }}</q-item-label>
-                    </q-item-section>
-                    <q-item-section side>
-                      <div>
-                        <q-btn
-                          round
-                          icon="add"
-                          size="xs"
-                          color="primary"
-                          @click="edit(props)"
-                        ></q-btn>
-                      </div>  
-                    </q-item-section>
-                  </q-item>
-                </q-list>
-              </q-card>
-            </div>
-          </template>
-        </q-table>
 
-            <q-table
-              grid
-              title="Users"
-              :data="my_data"
-              :columns="my_columns"
-              row-key="name"
+      <div class="q-pa-md align-center">
+        <div class="q-gutter-y-md" style="margin:0px">
+          <q-card>
+            <q-tabs
+              v-model="tab"
+              class="bg-purple text-white"
+              align="justify"
+              narrow-indicator
             >
-              <template v-slot:item="props">
-                <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition">
-                  <q-card>
-                    <q-list dense>
-                      <q-item v-for="col in props.cols" :key="col.name">
-                        <div class="q-table__grid-item-row">
-                          <div class="q-table__grid-item-title">{{ col.label }}</div>
-                          <div class="q-table__grid-item-value">{{ col.value }}</div>
-                        </div>
-                      </q-item>
-                    </q-list>
-                  </q-card>
+              <q-tab name="user" label="Usuario" />
+              <q-tab name="notification" label="Notificaciones" />
+              <q-tab name="security" label="Seguridad" />
+              <q-tab name="support" label="Soporte"/>
+            </q-tabs>
+
+            <q-separator />
+
+            <q-tab-panels v-model="tab" animated class="bg-purple-1 text-center">
+              <q-tab-panel name="user">
+                <div class="text-h6">Usuario</div>
+                <div class="q-pa-md" style="margin-left:200px;margin-right:200px">
+                  <q-form
+                    @submit="onSubmit"
+                    @reset="onReset"
+                    class="q-gutter-md"
+                  >
+                    <q-input
+                      filled
+                      v-model="name"
+                      label="Tu nombre *"
+                      hint="Nombre y apellido"
+                      lazy-rules
+                      :rules="[ val => val && val.length > 0 || 'Por favor escribe algo']"
+                    />
+                    <q-input
+                      filled
+                      v-model="email"
+                      label="Tu email *"
+                      hint="Email"
+                      lazy-rules
+                      :rules="[ val => val && val.length > 0 || 'Por favor escribe algo']"
+                    />
+
+                    <q-input v-model="fecha" filled type="date" hint="Fecha de nacimiento" />
+
+                    <div>
+                      <q-btn label="Submit" type="submit" color="primary"/>
+                      <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+                    </div>
+                  </q-form>
+
                 </div>
-              </template>
-            </q-table>
+              </q-tab-panel>
 
-          <q-table
-          title="Simple"
-          :data="my_data"
-          :columns="my_columns"
-          row-key="name"
-          dense
-        >
-          <template v-slot:body-cell-actions="props">
-            <q-td :props="props">
-              <q-btn dense round flat color="grey" @click="edit(props)" icon="edit"></q-btn>
-            </q-td>          
-          </template>
-        </q-table>
+              <q-tab-panel name="notification" class="bg-purple-2">
+                <div class="text-h6">Notificaciones</div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </q-tab-panel>
 
-        <q-table
-      title="Treats"
-      :data="my_data"
-      :columns="my_columns"
-      row-key="name"
-      selection="multiple"
-      :selected.sync="selected"
-    >
-       <template v-slot:top-right>
-        <q-btn
-          color="primary"
-          icon-right="delete_forever"
-          no-caps
-          @click="edit"
-        />
-      </template>
-       <template v-slot:body-cell-action="props">
-        <q-td :props="props">
-          <q-btn
-          color="negative"
-          icon-right="delete"
-          no-caps
-          flat
-          dense
-          @click="edit(props)"
-        />
-        </q-td>
-      </template>
-    </q-table>
+              <q-tab-panel name="security">
+                <div class="text-h6">Seguridad</div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </q-tab-panel>
+              <q-tab-panel name="support">
+                <div class="text-h6">Soporte</div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </q-tab-panel>
+            </q-tab-panels>
+          </q-card>
+        </div>
       </div>
-    </div>
-    
 
-    <div v-show="mostrar_nuevo_movimiento" class="q-pa-md q-gutter-sm">      
-      <q-dialog  v-model="mostrar_nuevo_movimiento" transition-show="rotate" transition-hide="rotate">
-        <q-card>
-          <q-card-section>
-            <div class="text-h6">Agregar movimiento</div>
-          </q-card-section>
-          
-
-           <div class="q-pa-md" style="max-width: 400px">
-
-        <q-form
-          @submit="submit_nuevo_movimiento"
-          @reset="reset_movimiento"
-          class="q-gutter-md"
-        >
-          <q-input
-            filled
-            v-model="nombre_movimiento"
-            label="Nombre"
-            hint="Nombre del nuevo movimiento"
-            lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Por favor, ingresa un nombre válido']"
-          />
-
-          <q-input
-            filled
-            type="textarea"
-            v-model="descripcion_movimiento"
-            label="Descripción"
-            hint="Descripción del nuevo movimiento"
-            lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Por favor, ingresa una descripción válido']"
-          />
-
-          
-          
-
-          <q-select square outlined v-model="categoria_movimiento" 
-          :options="categorias_movimiento" 
-             label="¿A qué categoría corresponde?"  />
-
-         
-          
-
-          <q-checkbox dense v-model="pago_en_cuotas" label="¿Es un pago en cuotas?" color="teal" /> 
-
-
-          <q-select v-show="pago_en_cuotas" square outlined v-model="cantidad_cuotas" 
-          :options="cantidad_de_cuotas" 
-             label="Cantidad de cuotas nuevo movimiento"  />
-
-          <q-input
-            filled
-            v-model="monto_movimiento"
-            label="Monto"
-            hint="Monto total del nuevo movimiento"
-            lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Por favor, ingresa un monto válido']"
-          />
-
-          <q-input v-model="fecha_movimiento" filled type="date" hint="Fecha movimiento. Por defecto, el día de hoy" 
-          :rules="[
-            val => val !== null && val !== '' || 'Por favor, ingresa una fecha'
-          ]"/>
-
-          
-          <q-toggle v-model="accept" label="He revisado los datos ingresados" />
-
-          <div>
-            <q-btn label="Agregar" type="subONmit" color="primary"/>
-            <q-btn label="Limpiar" type="reset" color="primary" flat class="q-ml-sm" />
-          </div>
-        </q-form>
-
-      </div>
-        </q-card>
-      </q-dialog>
-      
-    </div>
+    </div> 
 
     
   </q-page>
@@ -215,104 +99,17 @@ export default {
   data()
   {
     return{
+      fecha:'',
+      name: null,
+      email: null,
+      accept: false,
+      tab: 'user',
       selected: [],
       props: null,
       data_get: null,
       options_fetch: [],
       api_call: null,
-      url_base: "https://geome7ric.matiasjrb.com.ar/php/v1/Api.php?apicall=",
-      cantidad_de_cuotas: [3,6,9,12,15,18],
-      accept:false,
-      fecha_movimiento: this.hoy(),
-      mostrar_nuevo_movimiento: false,
-      nombre_movimiento: null,
-      categorias_movimiento: [],
-      categoria_movimiento: null,
-      monto_movimiento:null,
-      pago_en_cuotas: false,
-      cantidad_cuotas: null,
-      descripcion_movimiento:null,
-      saldo: 777.0,
-      filter: '',
-      name: 'PageIndex',
-      my_columns: [
-            {
-              name: 'desc',
-              required: true,
-              label: 'Nombre',
-              align: 'left',
-              field: row => row.nombre,
-              format: val => `${val}`,
-              sortable: true
-            },
-            { name: 'calories', align: 'center', label: 'Monto total', field: 'monto', sortable: true },
-            { name: 'fat', label: 'Descripción', field: 'descripcion', sortable: true },
-            { name: 'fat2', label: 'Categoría', field: 'categoria', sortable: true },
-            { name: 'carbs', label: 'Fecha de creación', field: 'fecha_creacion' },
-            { name: 'actions', label: 'Actions', field: '', align:'center' }
-          ],
-      my_data: [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37
-        },
-        {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23
-        },
-        {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65
-        }
-      ]
+      url_base: "https://geome7ric.matiasjrb.com.ar/php/v1/Api.php?apicall="
     }
   },  
   created()
@@ -328,6 +125,7 @@ export default {
       console.log(this.hoy());
   },
   methods: {
+    
     edit(props)
     {
       console.log(props);
@@ -480,6 +278,22 @@ export default {
     iniciar_nuevo_movimiento()
     {
       this.mostrar_nuevo_movimiento=true;
+    },
+    onSubmit () {
+      console.log("Entre");
+      this.$q.notify({
+        color: 'green-4',
+        textColor: 'white',
+        icon: 'cloud_done',
+        message: 'Todo correcto'
+      });
+      
+    },
+
+    onReset () {
+      this.name = null
+      this.age = null
+      this.accept = false
     }
   }  
 }
