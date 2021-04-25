@@ -14,6 +14,14 @@
           row-key="name"
           hide-header
         >
+
+          <!-- ¿Que hace éste código? Por más que lo saque no veo cambio-->
+          <!-- Según la documentación de quasar, el v-slot:body-cell-id se utiliza para
+          modificar el contenido de la columna id, pero no hay ninguna. De hecho cuando le cambio
+          el nombre o el v-slot no hace nada tampoco
+          Creo que se debe a que las columnas son otra cosa, y se está cargando todo como una única columna
+          aparte de las declaradas. Además de que el procesamiento para separar en filas se hace de manera manual
+          en el template de más abajo-->
           <template v-slot:body-cell-id="props">
             <q-td :props="props">
               <div>
@@ -27,6 +35,10 @@
               </div>  
             </q-td>
           </template>
+
+
+          <!-- Entiendo que este maneja adentro de cada card con total libertad
+          Se va separando de forma manual en las filas correspondientes-->
           <template v-slot:item="props">
             <div
               class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
@@ -38,22 +50,29 @@
                     <q-item-section>
                       <q-item-label>{{ col.value }}</q-item-label>
                     </q-item-section>
-                    <q-item-section side>
-                      <div>
-                        <q-btn
-                          round
-                          icon="add"
-                          size="xs"
-                          color="primary"
-                          @click="edit(props)"
-                        ></q-btn>
-                      </div>  
-                    </q-item-section>
                   </q-item>
                 </q-list>
+                <div class="row justify-end">
+                  <!-- No me queda bien cuando la pantalla es muy chica, se establecieron cambios de columnas para cada 
+                  breakpoint desde md hacia abajo. Cuando llega a xs y se hace cada vez más chico, empieza a salirse por el costado
+                  debido a que el tamaño de cada columna es cada vez más chico. Hay dos soluciones: Asumir que nunca va a ser más chico
+                  que determinado tamaño (Probar con la opción Galaxy S9 de Firefox. Desconozco si hay otras pantallas predefinidas en chrome) -->
+                  <div class="col-xs-3 col-sm-2 col-md-2 text-center " style="padding-bottom:10px">
+                    <q-btn
+                      round
+                      icon="add"
+                      size="md"
+                      color="primary"
+                      @click="edit(props)"
+                    ></q-btn>
+                  </div>
+                  
+                </div>  
               </q-card>
             </div>
+            
           </template>
+          
         </q-table>
 
             <q-table

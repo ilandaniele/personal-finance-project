@@ -45,8 +45,8 @@
                 Movimientos
               </q-item-section>
             </q-item>
-
-            <q-item clickable v-ripple>
+        
+            <q-item  @click="open_config" clickable v-ripple>
               <q-item-section avatar>
                 <q-icon name="settings" />
               </q-item-section>
@@ -229,6 +229,10 @@ export default {
     {
       console.log("envio movimiento");
       this.$root.$emit('iniciar_nuevo_movimiento');
+    },
+    open_config()
+    {
+      this.$router.push({path:'/config'});
     }
   }
 }
