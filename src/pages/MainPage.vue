@@ -14,6 +14,14 @@
           row-key="name"
           hide-header
         >
+
+          <!-- ¿Que hace éste código? Por más que lo saque no veo cambio-->
+          <!-- Según la documentación de quasar, el v-slot:body-cell-id se utiliza para
+          modificar el contenido de la columna id, pero no hay ninguna. De hecho cuando le cambio
+          el nombre o el v-slot no hace nada tampoco
+          Creo que se debe a que las columnas son otra cosa, y se está cargando todo como una única columna
+          aparte de las declaradas. Además de que el procesamiento para separar en filas se hace de manera manual
+          en el template de más abajo-->
           <template v-slot:body-cell-id="props">
             <q-td :props="props">
               <div>
@@ -27,6 +35,10 @@
               </div>  
             </q-td>
           </template>
+
+
+          <!-- Entiendo que este maneja adentro de cada card con total libertad
+          Se va separando de forma manual en las filas correspondientes-->
           <template v-slot:item="props">
             <div
               class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
@@ -38,22 +50,25 @@
                     <q-item-section>
                       <q-item-label>{{ col.value }}</q-item-label>
                     </q-item-section>
-                    <q-item-section side>
-                      <div>
-                        <q-btn
-                          round
-                          icon="add"
-                          size="xs"
-                          color="primary"
-                          @click="edit(props)"
-                        ></q-btn>
-                      </div>  
-                    </q-item-section>
                   </q-item>
                 </q-list>
+                <div class="row justify-end">
+                  <div class="col-xs-12 col-sm-2 col-md-2 text-center " style="padding-bottom:10px">
+                    <q-btn
+                      round
+                      icon="add"
+                      size="md"
+                      color="primary"
+                      @click="edit(props)"
+                    ></q-btn>
+                  </div>
+                  
+                </div>  
               </q-card>
             </div>
+            
           </template>
+          
         </q-table>
 
             <q-table
