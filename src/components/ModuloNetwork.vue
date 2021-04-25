@@ -119,6 +119,7 @@ export default {
     },
     async enviar_mail(mensaje,receptor,sujeto)
     {
+      /*mensaje receptor y sujeto son strings */
       var fd = new FormData();
       fd.append('mensaje', mensaje); 
       fd.append('receptor', receptor); 
@@ -126,6 +127,20 @@ export default {
 
       await this.post("mail_gw",fd); 
        
+    },
+    async enviar_mail_varios_destinatarios(mensaje,receptores,sujeto)
+    {
+      /*receptores tiene que ser un arreglo de strings con los mails*/
+      var fd;
+      for (var a in receptores)
+      {
+        console.log(a);
+        fd= new FormData();
+        fd.append('mensaje', mensaje); 
+        fd.append('receptor', receptores[a]); 
+        fd.append('sujeto', sujeto);
+        this.post("mail_gw",fd);
+      }
     },
     prueba_retorno(param)
     {

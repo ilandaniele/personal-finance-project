@@ -114,7 +114,9 @@ export default {
     console.log(this.respuesta[0]);
     this.funciones= new Vue(ModuloFunciones);
     this.respuesta= this.funciones.alerta_positiva_default("Asi se usa el modulo funciones");
-    //enviar_mail(mensaje,receptor,sujeto)
+    //enviar_mail(mensaje,receptor,sujeto)enviar_mail_varios_destinatarios(mensaje,receptores,sujeto)
+    var destinatarios=["matiasjriosb@gmail.com","mjrcal95@hotmail.com.ar"];
+    this.network.enviar_mail_varios_destinatarios("Anda con varios destinatarios",destinatarios,"God");
   }  ,
     methods: {  
       almacenar_respuesta(param)
