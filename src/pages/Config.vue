@@ -72,7 +72,30 @@
 
               <q-tab-panel name="notification" class="bg-purple-2">
                 <div class="text-h6">Notificaciones</div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                <div class="row">
+                  <div class="col">
+                    <p>Nuevas actualizaciones</p>
+                  </div>
+                  <div class="col">
+                    <q-toggle
+                      v-model="actualizaciones_notif_toggle"
+                      color="green"
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <p>
+                      Recordatorios
+                    </p> 
+                  </div>
+                  <div class="col">
+                    <q-toggle
+                      v-model="recordatorios_notif_toggle"
+                      color="green"
+                    />
+                  </div>
+                </div>
               </q-tab-panel>
 
               <q-tab-panel name="security">
@@ -99,6 +122,8 @@ export default {
   data()
   {
     return{
+      actualizaciones_notif_toggle:false,
+      recordatorios_notif_toggle:false,
       fecha:'',
       name: null,
       email: null,
