@@ -53,7 +53,11 @@
                   </q-item>
                 </q-list>
                 <div class="row justify-end">
-                  <div class="col-xs-12 col-sm-2 col-md-2 text-center " style="padding-bottom:10px">
+                  <!-- No me queda bien cuando la pantalla es muy chica, se establecieron cambios de columnas para cada 
+                  breakpoint desde md hacia abajo. Cuando llega a xs y se hace cada vez más chico, empieza a salirse por el costado
+                  debido a que el tamaño de cada columna es cada vez más chico. Hay dos soluciones: Asumir que nunca va a ser más chico
+                  que determinado tamaño (Probar con la opción Galaxy S9 de Firefox. Desconozco si hay otras pantallas predefinidas en chrome) -->
+                  <div class="col-xs-3 col-sm-2 col-md-2 text-center " style="padding-bottom:10px">
                     <q-btn
                       round
                       icon="add"
