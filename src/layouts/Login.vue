@@ -76,6 +76,7 @@
 <script>
 import MainLayout from 'layouts/MainLayout.vue';
 import ModuloFunciones from 'components/ModuloFunciones.vue'
+import ModuloNetwork from 'components/ModuloNetwork.vue'
 import { mapActions, mapState } from "vuex";
 import firebase from 'firebase/app';
 import Vue from 'vue'; // es6 syntax
@@ -88,31 +89,39 @@ export default {
     return {
       //url_base: "http://192.168.0.16/php/v1/Api.php?apicall=",
       funciones: null,
+      network: null,
       url_base: "https://matiasjrb.com.ar/php_bullmetal/v1/Api.php?apicall=",
       is_admin: false,
       formData: {email: 'matiasjriosb@gmail.com', password: 'Matiasjrb95!'},
       email: '',
       passwd: '',
       mensaje_error: '',
-      hay_error: false
+      hay_error: false,
+      respuesta: null,
     }
   },
    computed: {
     ...mapState('auth', ['loggedIn'])
   },
-  created()
+  async created()
   {
-    
-    console.log("estoy en login. tenes un ejemplo de como usar el modulo funciones.");
-    ModuloFunciones.methods.created;
-    ModuloFunciones.methods.alerta_positiva;
+    this.network= new Vue(ModuloNetwork);
+    this.respuesta= this.network.prueba_retorno("asa");
+    console.log("[Login]");
+    console.log(this.respuesta);
+    this.respuesta= await this.network.get("getmov","movimientos");
+    console.log("[Login]");
+    console.log(this.respuesta[0]);
     this.funciones= new Vue(ModuloFunciones);
-    this.funciones.$emit('alerta_positiva', "chau");
-    this.funciones.$emit('alerta_negativa', "atencion");
-    this.funciones.$emit('alerta_negativa_error', "fallo");
-    
+    this.respuesta= this.funciones.alerta_positiva_default("Asi se usa el modulo funciones");
+    //enviar_mail(mensaje,receptor,sujeto)
   }  ,
     methods: {  
+      almacenar_respuesta(param)
+      {
+        console.log("[login]almaceno la respuesta");
+        this.respuesta=param;
+      },
       intentar_iniciar_sesion_google()
       {
         console.log("iniciar sesion con google");

@@ -21,11 +21,8 @@ export default {
     si emiten alerta positiva, lo capturo y ejecuto el metodo this.alertapositiva(param) 
     y asi con todo lo que querramos definir...
     */
-    console.log("se configuran los listener");
-    this.$root.$on('alerta_positiva', (param) => this.alerta_positiva_default(param));
-    this.$root.$on('alerta_positiva_nube', (param) => this.alerta_positiva_nube(param));
-    this.$root.$on('alerta_negativa', (param) => this.alerta_negativa_default(param));
-    this.$root.$on('alerta_negativa_error', (param) => this.alerta_negativa_error(param));
+   
+
   },
   methods:
   {
@@ -64,6 +61,24 @@ export default {
                         icon: 'error',
                         message: msg
                       })
+    },
+    hoy()
+    {
+      var hoy = new Date();
+      var dd = String(hoy.getDate()).padStart(2, '0');
+      var MM = String(hoy.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = hoy.getFullYear();      
+      hoy = yyyy + '-' + MM + '-' + dd;
+      return hoy;
+    },
+    mostrar_cargando(msg) {
+      this.$q.loading.show({
+        message: msg
+      })      
+    },
+    ocultar_cargando()
+    {
+      this.$q.loading.hide();
     },
   }
 }
