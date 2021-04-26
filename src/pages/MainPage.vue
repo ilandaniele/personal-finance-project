@@ -145,7 +145,7 @@
     </div>
     
 
-    <div v-show="mostrar_nuevo_movimiento" class="q-pa-md q-gutter-sm">      
+    <div v-show="mostrar_nuevo_movimiento" class="q-pa-md q-gutter-md">      
       <q-dialog  v-model="mostrar_nuevo_movimiento" transition-show="rotate" transition-hide="rotate">
         <q-card>
           <q-card-section>
@@ -153,7 +153,7 @@
           </q-card-section>
           
 
-           <div class="q-pa-md" style="max-width: 400px">
+           <div class="q-pa-md" style="width: 400px;max-width: 600px">
 
         <q-form
           @submit="submit_nuevo_movimiento"
@@ -230,11 +230,15 @@
 </template>
 
 <script>
+import ModuloFuncionesVue from 'src/components/ModuloFunciones.vue';
+
+import Vue from 'vue'; // es6 syntax
 export default { 
   data()
   {
     return{
       selected: [],
+      funciones: null,
       props: null,
       data_get: null,
       options_fetch: [],
@@ -336,15 +340,18 @@ export default {
   },  
   created()
   {
-    this.mostrar_cargando("Un segundo..");
+    
+    this.funciones= new Vue(ModuloFuncionesVue);
+    this.funciones.mostrar_cargando("Un segundo..");
+    this.funciones.alerta_positiva_home("Bienvenido");
     this.categorias_movimiento= ["Categoria prueba"];
     this.obtener_movimientos();
     //alert("wtf");
     this.$root.$on('iniciar_nuevo_movimiento', () => this.iniciar_nuevo_movimiento());
-    this.ocultar_cargando();    
-    this.popup_message("Bienvenido","green","home","white");
-    
-      console.log(this.hoy());
+  },
+  mounted()
+  {    
+    this.funciones.ocultar_cargando();  
   },
   methods: {
     edit(props)

@@ -44,6 +44,15 @@ export default {
                         message: msg
                       })
     },
+    alerta_positiva_home(msg)
+    {
+      this.$q.notify({
+                        color: 'green-4',
+                        textColor: 'white',
+                        icon: 'home',
+                        message: msg
+                      })
+    },
     alerta_negativa_default(msg)
     {
         this.$q.notify({

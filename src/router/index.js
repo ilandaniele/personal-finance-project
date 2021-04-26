@@ -33,7 +33,8 @@ export default function (/* { store, ssrContext } */) {
     const isAuthenticated= firebase.auth().currentUser;
     if (requiresAuth && !isAuthenticated)
     {
-      //next();
+      next();
+      
 
       /*
       descomentando next("/relogin"); y comentando el next() de arriba  te obliga estar con la sesion iniciada para acceder a otra ubicacion 
@@ -45,7 +46,7 @@ export default function (/* { store, ssrContext } */) {
       if (go_to =="/register" || go_to == "/relogin")
         next();
       else
-        next("relogin");
+        next();
       //
       
     }

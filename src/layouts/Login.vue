@@ -109,14 +109,13 @@ export default {
     this.respuesta= this.network.prueba_retorno("asa");
     console.log("[Login]");
     console.log(this.respuesta);
-    this.respuesta= await this.network.get("getmov","movimientos");
+    //this.respuesta= await this.network.get("getmov","movimientos");
     console.log("[Login]");
-    console.log(this.respuesta[0]);
+    //console.log(this.respuesta[0]);
     this.funciones= new Vue(ModuloFunciones);
     this.respuesta= this.funciones.alerta_positiva_default("Asi se usa el modulo funciones");
-    //enviar_mail(mensaje,receptor,sujeto)enviar_mail_varios_destinatarios(mensaje,receptores,sujeto)
-    var destinatarios=["matiasjriosb@gmail.com","mjrcal95@hotmail.com.ar"];
-    this.network.enviar_mail_varios_destinatarios("Anda con varios destinatarios",destinatarios,"God");
+    //var res=await this.network.enviar_mail("prueba","matiasjriosb@gmail.com");
+    
   }  ,
     methods: {  
       almacenar_respuesta(param)

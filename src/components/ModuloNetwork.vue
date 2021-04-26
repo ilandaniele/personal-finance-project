@@ -42,7 +42,7 @@ export default {
   methods:
   {
     /*
-    la apical que le pedis y */
+    la apicall que le pedis y la key json */
     async get(apicall,especificacion_arreglo)
     {
       const response = await fetch(this.url_base+apicall);
@@ -53,22 +53,16 @@ export default {
     },
     async post(apicall,form_data)
     {
+      var error=false;
       this.options_fetch =
       {
         method: 'POST',
         body: form_data
-      };
-      
+      };      
       const response = await fetch(this.url_base+apicall,this.options_fetch);
 
       const data = await response;
-      console.log("[ModuloNetwork]");
-      console.log(data);
-      return response;
-
-      /*falta verificar si hubo error */
-      
-      //return data[especificacion_arreglo];
+      return error;
     },
     async cargar_imagen(imagen_file,image_name,folder_name)
     {
