@@ -4,6 +4,9 @@
       <div class="q-mb-xl q-mt-xl text-h2 text-weight-thin col-1 text-center " >
             Saldo:  ${{saldo}}
       </div>
+       <div>
+        Battery status is: <strong>{{ batteryStatus }}</strong>
+      </div>
 
       <div class="q-pa-md col-2 full-width">
         <q-table
@@ -230,13 +233,22 @@
 </template>
 
 <script>
+
+
 import ModuloFuncionesVue from 'src/components/ModuloFunciones.vue';
 
 import Vue from 'vue'; // es6 syntax
+
+document.addEventListener('deviceready', () => {
+  // it's only now that we are sure
+  // the event has triggered
+}, false)
+
 export default { 
   data()
   {
     return{
+      batteryStatus: 'determining...',
       selected: [],
       funciones: null,
       props: null,
@@ -340,7 +352,7 @@ export default {
   },  
   created()
   {
-    
+    window.addEventListener('batterystatus', this.updateBatteryStatus, false)
     this.funciones= new Vue(ModuloFuncionesVue);
     this.funciones.mostrar_cargando("Un segundo..");
     this.funciones.alerta_positiva_home("Bienvenido");
@@ -349,14 +361,22 @@ export default {
     //alert("wtf");
     this.$root.$on('iniciar_nuevo_movimiento', () => this.iniciar_nuevo_movimiento());
   },
+  beforeDestroy () {
+    // we do some cleanup;
+    // we need to remove the event listener
+    window.removeEventListener('batterystatus', this.updateBatteryStatus, false)
+  },
   mounted()
   {    
     this.funciones.ocultar_cargando();  
   },
   methods: {
+    updateBatteryStatus (status) {
+      this.batteryStatus = `Level: ${status.level}, plugged: ${status.isPlugged}`
+    },
     edit(props)
     {
-      console.log(props);
+      console.log(props.cols.descripcion);
     },
     async insertar(apicall)
     {

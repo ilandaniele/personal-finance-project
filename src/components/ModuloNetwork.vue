@@ -53,6 +53,7 @@ export default {
     },
     async post(apicall,form_data)
     {
+      /*retorna -1 0 1 para error servidor error logico caso positivo */
       var error=false;
       this.options_fetch =
       {
@@ -63,7 +64,18 @@ export default {
 
       const data = await response;
       return error;
-    },
+    },/**ejemplo de como debe quedar una funcion de este modulo. hay que mejorar el post
+    async insertar_usuario(datos_usuario)
+    {
+      if (post(apical_insertar_usuario))
+      {
+        modfunciones.mensajeexito(contenidomensaje);
+      }
+      else
+      {
+         modfunciones.mensajeerror(contenidomensaje);
+      }
+    },*/
     async cargar_imagen(imagen_file,image_name,folder_name)
     {
         /* settings*/
@@ -121,7 +133,7 @@ export default {
 
       await this.post("mail_gw",fd); 
        
-    },
+    },    
     async enviar_mail_varios_destinatarios(mensaje,receptores,sujeto)
     {
       /*receptores tiene que ser un arreglo de strings con los mails*/

@@ -139,15 +139,9 @@ export default {
   },  
   created()
   {
-    this.mostrar_cargando("Un segundo..");
-    this.categorias_movimiento= ["Categoria prueba"];
     this.obtener_movimientos();
-    //alert("wtf");
-    this.$root.$on('iniciar_nuevo_movimiento', () => this.iniciar_nuevo_movimiento());
-    this.hideLoading();    
-    this.popup_message("Bienvenido","green","home","white");
     
-      console.log(this.hoy());
+    
   },
   methods: {
     
