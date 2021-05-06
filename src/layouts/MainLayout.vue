@@ -65,12 +65,12 @@
                 Ayuda
               </q-item-section>
             </q-item>
-            <q-item clickable v-ripple>
+            <q-item  @click="open_about"  clickable v-ripple>
               <q-item-section avatar>
                 <q-icon name="info" />
               </q-item-section>
 
-              <q-item-section>
+              <q-item-section to="/acercaDe.vue">
                 Acerca de
               </q-item-section>
             </q-item>
@@ -233,6 +233,10 @@ export default {
     open_config()
     {
       this.$router.push({path:'/config'});
+    },
+    open_about()
+    {
+      this.$router.push({path:'/acercaDe'});
     }
   }
 }
