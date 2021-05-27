@@ -4,6 +4,8 @@ A Quasar Framework app
 
 ## Install the dependencies
 ```bash
+npm -g install @quasar/cli
+npm -g install cordova
 npm install
 ```
 
